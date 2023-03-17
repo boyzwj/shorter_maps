@@ -32,6 +32,10 @@ defmodule ShorterMaps do
     do_sigil_m(string, line, modifier(modifiers, @default_modifier_m))
   end
 
+  defmacro sigil_m({:<<>>, [line: line, column: _], [string]}, modifiers) do
+    do_sigil_m(string, line, modifier(modifiers, @default_modifier_m))
+  end
+
   defmacro sigil_m({:<<>>, _, _}, _modifiers) do
     raise ArgumentError, "interpolation is not supported with the ~m sigil"
   end
@@ -62,9 +66,15 @@ defmodule ShorterMaps do
 
   """
   defmacro sigil_M(term, modifiers)
+  
   defmacro sigil_M({:<<>>, [line: line], [string]}, modifiers) do
     do_sigil_m(string, line, modifier(modifiers, @default_modifier_M))
   end
+
+  defmacro sigil_M({:<<>>, [line: line, column: _], [string]}, modifiers) do
+    do_sigil_m(string, line, modifier(modifiers, @default_modifier_M))
+  end
+
   defmacro sigil_M({:<<>>, _, _}, _modifiers) do
     raise ArgumentError, "interpolation is not supported with the ~M sigil"
   end
